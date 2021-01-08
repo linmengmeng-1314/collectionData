@@ -149,20 +149,34 @@ function alertFullSuccess(title, content, callback){
     }).showModal();
 }
 
+/**
+ * 定时关闭的弹窗  默认两秒后关闭弹窗
+ * @param content 弹窗内容
+ * @param callback  回调函数
+ */
 function alertSuccessAutoClose(content, callback){
+    alertSuccessAutoClose(content, callback, 2000);
+}
 
+/**
+ * 定时关闭的弹窗  默认两秒后关闭弹窗
+ * @param content 弹窗内容
+ * @param callback  回调函数
+ * @param timeout   延迟关闭时间(ms)
+ */
+function alertSuccessAutoClose(content, callback, timeout){
     if(typeof callback != 'function') {
         callback = function(){
             //do something
         };
     }
 
+    if (timeout == null){
+        timeout = 2000;
+    }
+
     var d = dialog({
-        //title: title,
         content: content,
-        //okValue: '确定',
-        //ok: callback,
-        //cancel: false
         onremove: function () {
             callback();
         }
@@ -171,5 +185,5 @@ function alertSuccessAutoClose(content, callback){
 
     setTimeout(function(){
         d.close().remove();
-    },2000);
+    },timeout);
 }
